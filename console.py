@@ -2,9 +2,6 @@
 """ Console Module """
 import cmd
 import sys
-import re
-import os
-from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -13,7 +10,6 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -41,6 +37,7 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
+
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
@@ -121,29 +118,13 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        args = args.split(' ', 1)
-        state = args[0]
-        if state.strip() not in HBNBCommand.classes:
+        elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        kwargs = []
-        if len(args) > 1:
-            kwargs = re.findall(r'(\S+)=(\S+)', args[1])
-            kwargs = dict(kwargs)
-            for k, v in kwargs.items():
-                if re.match(r'-?\d+\.\d+', v):
-                    # float
-                    kwargs[k] = float(v)
-                elif re.match(r'-?\d+[^\.]', v):
-                    # integer
-                    kwargs[k] = int(v)
-                else:
-                    v = v.strip('"').replace('\\', '').replace('_', ' ')
-                    kwargs[k] = v
-
-        new_instance = HBNBCommand.classes[args[0]](**kwargs)
+        new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
