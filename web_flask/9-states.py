@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Importing Flask to run web application with
-two routings on 0.0.0.0, port 5000
+two routings listening on 0.0.0.0, port 5000
 """
 from flask import Flask, render_template
 from models import storage
