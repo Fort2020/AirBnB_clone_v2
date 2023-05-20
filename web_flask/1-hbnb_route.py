@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This script starts a Flask web application with two routings on 0.0.0.0, port 5000
+"""This script starts a Flask web application
+ with two routings listening on 0.0.0.0, port 5000
 """
 
 from flask import Flask
